@@ -86,14 +86,14 @@
 	
 	class Canvas {
 	  constructor() {
-	    this.x = 30;
-	    this.y = 30;
+	    this.x = Canvas.CELLS_X;
+	    this.y = Canvas.CELLS_Y;
 	
 	    this.cells = this.newCells();
 	  }
 	
 	  clickHandler(x,y) {
-	    this.cells[Math.floor(x/15)][Math.floor(y/15)].clickMe();
+	    this.cells[Math.floor(x/Canvas.CELLXDIM)][Math.floor(y/Canvas.CELLYDIM)].clickMe();
 	  }
 	
 	  newCells() {
@@ -119,22 +119,28 @@
 	    }
 	  }
 	
-	  step(ctx) {
+	  neighbors() {
 	
 	  }
 	}
 	
 	Canvas.BG_COLOR = "#ffffff";
-	Canvas.DIM_X = 450;
-	Canvas.DIM_Y = 450;
+	Canvas.DIM_X = 600;
+	Canvas.DIM_Y = 600;
+	Canvas.CELLS_X = 60;
+	Canvas.CELLS_Y = 60;
+	Canvas.CELLXDIM = Canvas.DIM_X/Canvas.CELLS_X;
+	Canvas.CELLYDIM = Canvas.DIM_Y/Canvas.CELLS_Y;
 	
 	module.exports = Canvas;
 
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	const Canvas = __webpack_require__(1);
+	
 	class Cell {
 	  constructor(i, j, status) {
 	    this.x = i;
@@ -157,12 +163,19 @@
 	  draw(ctx) {
 	    ctx.fillStyle = '#000000'
 	    if (this.status === 'wall') {
-	      ctx.fillRect(15*this.x, 15*this.y, 15, 15);
+	      ctx.fillRect(10*this.x, 10*this.y, 10, 10);
 	    } else {
-	      ctx.strokeRect(15*this.x, 15*this.y, 15, 15);
+	      ctx.strokeRect(10*this.x, 10*this.y, 10, 10);
 	    }
 	  }
 	
+	  neighbors() {
+	    const neighborActions = [[1,0], [1,1], [0,1], [-1,1], [-1,-1], [1,-1], [-1,0], [0,-1]]
+	    let neighborCells = [];
+	    neighborActions.forEach((move) => {
+	
+	    });
+	  }
 	}
 	
 	module.exports = Cell;
