@@ -80,10 +80,18 @@
 	    thisCanvas.draw(ctx);
 	  });
 	
+	  $('.template-glider').on('click', () => {
+	    thisCanvas.setTemplate('glider');
+	  });
+	
+	  $('.template-pulsar').on('click', () => {
+	    thisCanvas.setTemplate('pulsar');
+	  });
+	
 	  let intervalName;
 	  $('.step-play').on('click', () => {
 	    $('.play-active').toggleClass('hidden');
-	    
+	
 	    if (intervalName) {
 	      clearInterval(intervalName);
 	      intervalName = null;
@@ -102,7 +110,8 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	const Cell = __webpack_require__(2)
+	const Cell = __webpack_require__(2);
+	const Template = __webpack_require__(3);
 	
 	class Canvas {
 	  constructor() {
@@ -110,10 +119,40 @@
 	    this.y = Canvas.CELLS_Y;
 	
 	    this.cells = this.newCells();
+	    this.template = Template.dot();
 	  }
 	
 	  clickHandler(x,y) {
-	    this.cells[Math.floor(x/Canvas.CELLXDIM)][Math.floor(y/Canvas.CELLYDIM)].clickMe();
+	    let cellXpos = Math.floor(x/Canvas.CELLXDIM);
+	    let cellYpos = Math.floor(y/Canvas.CELLYDIM);
+	    // this.cells[cellXpos][cellYpos].clickMe();
+	    this.generateTemplate(cellXpos, cellYpos, this.template);
+	  }
+	
+	  setTemplate(templateName) {
+	    switch(templateName) {
+	      case 'glider':
+	        this.template = Template.glider();
+	        break;
+	      case 'pulsar':
+	        this.template = Template.pulsar();
+	        break;
+	      default:
+	        this.template = Template.dot();
+	        break;
+	    }
+	  }
+	
+	  generateTemplate(x, y, template) {
+	    template.forEach((templateRow, rowIdx) => {
+	      templateRow.forEach((activeState, cellIdx) => {
+	        if (activeState === 1) {
+	          this.cells[x+cellIdx][y+rowIdx].live();
+	        } else {
+	          this.cells[x+cellIdx][y+rowIdx].die();
+	        }
+	      });
+	    });
 	  }
 	
 	  newCells() {
@@ -281,6 +320,63 @@
 	Cell.CELLS_X = 45;
 	Cell.CELLS_Y = 45;
 	module.exports = Cell;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	class Template {
+	  static glider () {
+	    return [
+	      [1,0,0],
+	      [0,1,1],
+	      [1,1,0]
+	    ];
+	  }
+	
+	  static dot () {
+	    return [
+	      [1]
+	    ];
+	  }
+	
+	  static block () {
+	    return [
+	      [1,1],
+	      [1,1]
+	    ]
+	  }
+	
+	  static beehive () {
+	    return [
+	      [0,1,1,0],
+	      [1,0,0,1],
+	      [0,1,1,0]
+	    ]
+	  }
+	
+	  static pulsar () {
+	    return [
+	      [0,0,1,1,1,0,0,0,1,1,1,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,0],
+	      [1,0,0,0,0,1,0,1,0,0,0,0,1],
+	      [1,0,0,0,0,1,0,1,0,0,0,0,1],
+	      [1,0,0,0,0,1,0,1,0,0,0,0,1],
+	      [0,0,1,1,1,0,0,0,1,1,1,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,1,1,1,0,0,0,1,1,1,0,0],
+	      [1,0,0,0,0,1,0,1,0,0,0,0,1],
+	      [1,0,0,0,0,1,0,1,0,0,0,0,1],
+	      [1,0,0,0,0,1,0,1,0,0,0,0,1],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,1,1,1,0,0,0,1,1,1,0,0]
+	    ]
+	  }
+	
+	}
+	
+	module.exports = Template;
 
 
 /***/ }
