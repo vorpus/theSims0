@@ -1,3 +1,57 @@
 body {
-  background: black;
+  background: #100000;
+  color: white;
+  font-family: sans-serif;
+}
+
+.the-world {
+  width: 675px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 48px;
+}
+
+.heading {
+  position: relative;
+}
+
+.heading-right {
+  position: absolute;
+  font-size: 14px;
+  top: 10px;
+  right: 0;
+}
+
+.heading-right div {
+  margin: 5px;
+}
+
+.title {
+  margin-top: 15px;
+  font-size: 48px;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.button {
+  color: darkblue;
+  float: left;
+  background: lightblue;
+  box-sizing:border-box;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.button:hover {
+  cursor: pointer;
+  outline: 3px solid blue;
+}
+
+.hidden {
+  display: none;
 }
