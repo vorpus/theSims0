@@ -44,7 +44,9 @@ body {
   background: lightblue;
   box-sizing:border-box;
   padding: 10px;
+  margin-top: 10px;
   margin-right: 10px;
+  border-radius: 5px;
 }
 
 .button:hover {
@@ -52,6 +54,26 @@ body {
   outline: 3px solid blue;
 }
 
+.play-active {
+  background: green;
+}
+
+.play-active.stop {
+  background: red;
+}
+
 .hidden {
   display: none;
+}
+
+.below-selectors {
+  background: orange;
+  margin-top: 10px;
+  color: black;
+}
+.template-description {
+  margin: 10px 0;
+}
+.template-clickable {
+  text-transform: capitalize;
 }

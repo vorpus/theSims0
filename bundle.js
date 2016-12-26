@@ -75,18 +75,19 @@
 	    thisCanvas.draw(ctx);
 	  });
 	
+	  $('canvas')[0].addEventListener("mousemove", (e) => {
+	    let clickedPos = getMousePos(e.target, e);
+	    thisCanvas.hoverHandler(clickedPos.x, clickedPos.y, ctx);
+	  });
+	
 	  $('.one-step').on('click', () => {
 	    thisCanvas.processConway(ctx, 1);
 	    thisCanvas.draw(ctx);
 	  });
 	
-	  $('.template-glider').on('click', () => {
-	    thisCanvas.setTemplate('glider');
-	  });
 	
-	  $('.template-pulsar').on('click', () => {
-	    thisCanvas.setTemplate('pulsar');
-	  });
+	
+	
 	
 	  let intervalName;
 	  $('.step-play').on('click', () => {
@@ -99,8 +100,40 @@
 	      intervalName = setInterval(() => {
 	        thisCanvas.processConway(ctx, 1);
 	        thisCanvas.draw(ctx);
-	      }, 500);
+	      }, 300);
 	    }
+	  });
+	
+	  $('.pick-still-life').on('click', () => {
+	    $('.still-life-select').removeClass('hidden');
+	    $('.oscillator-select').addClass('hidden');
+	    $('.spaceship-select').addClass('hidden');
+	    $('.generator-select').addClass('hidden');
+	  });
+	
+	  $('.pick-oscillator').on('click', () => {
+	    $('.still-life-select').addClass('hidden');
+	    $('.oscillator-select').removeClass('hidden');
+	    $('.spaceship-select').addClass('hidden');
+	    $('.generator-select').addClass('hidden');
+	  });
+	
+	  $('.pick-spaceship').on('click', () => {
+	    $('.still-life-select').addClass('hidden');
+	    $('.oscillator-select').addClass('hidden');
+	    $('.spaceship-select').removeClass('hidden');
+	    $('.generator-select').addClass('hidden');
+	  });
+	
+	  $('.pick-generator').on('click', () => {
+	    $('.still-life-select').addClass('hidden');
+	    $('.oscillator-select').addClass('hidden');
+	    $('.spaceship-select').addClass('hidden');
+	    $('.generator-select').removeClass('hidden');
+	  });
+	
+	  $('.template-clickable').on('click', (e) => {
+	    thisCanvas.setTemplate(e.target.attributes.data.nodeValue);
 	  });
 	
 	})
@@ -129,13 +162,46 @@
 	    this.generateTemplate(cellXpos, cellYpos, this.template);
 	  }
 	
+	  hoverHandler(x, y, ctx) {
+	    let cellXpos = Math.floor(x/Canvas.CELLXDIM)*Canvas.CELLXDIM;
+	    let cellYpos = Math.floor(y/Canvas.CELLYDIM)*Canvas.CELLYDIM;
+	
+	    let templateHeight = this.template.length*Canvas.CELLXDIM;
+	    let templateWidth = this.template[0].length*Canvas.CELLYDIM;
+	
+	    this.draw(ctx);
+	    ctx.fillStyle = 'rgba(255,255,0,0.3)';
+	    ctx.fillRect(cellXpos, cellYpos, templateWidth, templateHeight);
+	  }
+	
 	  setTemplate(templateName) {
 	    switch(templateName) {
+	      case 'block':
+	        this.template = Template.block();
+	        break;
+	      case 'beehive':
+	        this.template = Template.beehive();
+	        break;
 	      case 'glider':
 	        this.template = Template.glider();
 	        break;
+	      case 'lightweightspaceship':
+	        this.template = Template.lightweightspaceship();
+	        break;
+	      case 'c10orthogonal':
+	        this.template = Template.c10orthogonal();
+	        break;
+	      case 'pentadecathlon':
+	        this.template = Template.pentadecathlon();
+	        break;
 	      case 'pulsar':
 	        this.template = Template.pulsar();
+	        break;
+	      case 'p16':
+	        this.template = Template.p16();
+	        break;
+	      case 'glidergun':
+	        this.template = Template.glidergun();
 	        break;
 	      default:
 	        this.template = Template.dot();
@@ -247,10 +313,10 @@
 	}
 	
 	Canvas.BG_COLOR = "#ffffff";
-	Canvas.DIM_X = 675;
-	Canvas.DIM_Y = 675;
-	Canvas.CELLS_X = 45;
-	Canvas.CELLS_Y = 45;
+	Canvas.DIM_X = 680;
+	Canvas.DIM_Y = 600;
+	Canvas.CELLS_X = 68;
+	Canvas.CELLS_Y = 60;
 	Canvas.CELLXDIM = Canvas.DIM_X/Canvas.CELLS_X;
 	Canvas.CELLYDIM = Canvas.DIM_Y/Canvas.CELLS_Y;
 	
@@ -291,7 +357,7 @@
 	
 	  draw(ctx) {
 	    ctx.fillStyle = '#000000'
-	    const gdSz = 15;
+	    const gdSz = 10;
 	    if (this.status === 'alive') {
 	      ctx.fillStyle = '#000000'
 	      ctx.fillRect(gdSz*this.x, gdSz*this.y, gdSz, gdSz);
@@ -316,9 +382,9 @@
 	  }
 	}
 	
-	Cell.GRIDSIZE = 15;
-	Cell.CELLS_X = 45;
-	Cell.CELLS_Y = 45;
+	Cell.GRIDSIZE = 10;
+	Cell.CELLS_X = 68;
+	Cell.CELLS_Y = 60;
 	module.exports = Cell;
 
 
@@ -327,14 +393,6 @@
 /***/ function(module, exports) {
 
 	class Template {
-	  static glider () {
-	    return [
-	      [1,0,0],
-	      [0,1,1],
-	      [1,1,0]
-	    ];
-	  }
-	
 	  static dot () {
 	    return [
 	      [1]
@@ -356,6 +414,14 @@
 	    ]
 	  }
 	
+	  static pentadecathlon () {
+	    return [
+	      [0,0,1,0,0,0,0,1,0,0],
+	      [1,1,0,1,1,1,1,0,1,1],
+	      [0,0,1,0,0,0,0,1,0,0]
+	    ]
+	  }
+	
 	  static pulsar () {
 	    return [
 	      [0,0,1,1,1,0,0,0,1,1,1,0,0],
@@ -372,6 +438,70 @@
 	      [0,0,0,0,0,0,0,0,0,0,0,0,0],
 	      [0,0,1,1,1,0,0,0,1,1,1,0,0]
 	    ]
+	  }
+	
+	  static p16 () {
+	    return [
+	      [0,0,1,1,1,0,0,0,1,1,1,0,0],
+	      [0,1,0,0,0,1,0,1,0,0,0,1,0],
+	      [0,1,0,0,0,1,0,1,0,0,0,1,0],
+	      [1,0,1,1,1,1,0,1,1,1,1,0,1],
+	      [1,1,0,0,0,0,0,0,0,0,0,1,1],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,0,0,1,1,0,1,1,0,0,0,0],
+	      [0,0,0,1,0,1,0,1,0,1,0,0,0],
+	      [0,0,0,0,1,0,0,0,1,0,0,0,0]
+	    ]
+	  }
+	
+	  static lightweightspaceship () {
+	    return [
+	      [0,1,0,0,1],
+	      [1,0,0,0,0],
+	      [1,0,0,0,1],
+	      [1,1,1,1,0]
+	    ];
+	  }
+	
+	  static glider () {
+	    return [
+	      [1,0,0],
+	      [0,1,1],
+	      [1,1,0]
+	    ];
+	  }
+	
+	
+	  static c10orthogonal () {
+	    return [
+	      [0,1,1,0,0,1,1,0],
+	      [0,0,0,1,1,0,0,0],
+	      [0,0,0,1,1,0,0,0],
+	      [1,0,1,0,0,1,0,1],
+	      [1,0,0,0,0,0,0,1],
+	      [0,0,0,0,0,0,0,0],
+	      [1,0,0,0,0,0,0,1],
+	      [0,1,1,0,0,1,1,0],
+	      [0,0,1,1,1,1,0,0],
+	      [0,0,0,0,0,0,0,0],
+	      [0,0,0,1,1,0,0,0],
+	      [0,0,0,1,1,0,0,0],
+	    ];
+	  }
+	
+	  static glidergun () {
+	    return [
+	      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+	      [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+	      [1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	      [1,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	      [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	    ];
 	  }
 	
 	}
