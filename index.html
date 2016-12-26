@@ -43,86 +43,113 @@
             Step
           </div>
           <div class="step-play">
-            <div class="play-active button">
+            <div class="play-active play button">
               Play
             </div>
             <div class="play-active stop button hidden">
               Stop
             </div>
           </div>
+
+          <div class="slider">
+            <p>Speed:</p>
+            <input id="speed-picker" type="range" name="" value="40" name="" value="0" min="0" max="100">
+          </div>
+
+          <div class="clear-all button">
+            CLEAR
+          </div>
         </div>
 
-
         <div class="below-selectors group">
-          <div class="pickers-section group">
-            <div class="pick-still-life button">
-              Still Life
+
+          <div class="pickers-everything">
+            <div class="pickers-section group">
+              <div class="pick-still-life button">
+                Still Life
+              </div>
+              <div class="pick-oscillator button">
+                Oscillators
+              </div>
+              <div class="pick-spaceship button">
+                Spaceships
+              </div>
+              <div class="pick-generator button">
+                Generators
+              </div>
             </div>
-            <div class="pick-oscillator button">
-              Oscillators
+
+            <div class="below-selectors-type still-life-select group">
+              <div class="template-description">
+                <b>Still life</b> are patterns that do not change between generations.
+              </div>
+              <div class="template-clickable button" data="block">
+                block
+              </div>
+              <div class="template-clickable button" data="beehive">
+                beehive
+              </div>
             </div>
-            <div class="pick-spaceship button">
-              Spaceships
+
+            <div class="below-selectors-type oscillator-select hidden group">
+              <div class="template-description">
+                <b>Oscillators</b> are patterns that eventually return to its original state after several generations.
+              </div>
+              <div class="template-clickable button" data="pentadecathlon">
+                pentadecathlon
+              </div>
+              <div class="template-clickable button" data="pulsar">
+                Pulsar
+              </div>
+
+              <div class="template-clickable button" data="p16">
+                P16
+              </div>
             </div>
-            <div class="pick-generator button">
-              Generators
+
+            <div class="below-selectors-type spaceship-select hidden group">
+              <div class="template-description">
+                <b>Spaceships</b> are patterns that reappear after several generations in a new position, giving the illusion of movement.
+              </div>
+              <div class="template-clickable button" data="glider">
+                Glider
+              </div>
+              <div class="template-clickable button" data="lightweightspaceship">
+                LWSS
+              </div>
+              <div class="template-clickable button" data="c10orthogonal">
+                c10orthogonal
+              </div>
+            </div>
+
+            <div class="below-selectors-type generator-select hidden group">
+              <div class="template-description">
+                <b>Generators</b> are stationary patterns that create gliders after several generations.
+              </div>
+              <div class="template-clickable button" data="glidergun">
+                Gosper Glider Gun
+              </div>
+
             </div>
           </div>
 
-          <div class="below-selectors-type still-life-select">
-            <div class="template-description">
-              <b>Still life</b> are patterns that do not change between generations.
+
+          <div class="about-conway">
+            <div class="heading">
+              What's going on here?
             </div>
-            <div class="template-clickable button" data="block">
-              block
-            </div>
-            <div class="template-clickable button" data="beehive">
-              beehive
-            </div>
+            <p><b>Conway's Game of Life</b> is a cellular atomaton simulation where Cells
+              live (represented by a black square) or die (white square)
+              based on a set of four simple conditions...
+              <ol>
+                <li>A live cell < 2 live neighbours dies (underpopulation)</li>
+                <li>A live cell with 2-3 live neighbors continues living</li>
+                <li>A live cell with > 3 live neighbors dies (overpopulation)</li>
+                <li>A dead cell with exactly 3 live neighbors comes to life (reproduction)</li>
+              </ol>
+              Find more on my Github (readme)!
+            </p>
           </div>
-
-          <div class="below-selectors-type oscillator-select hidden">
-            <div class="template-description">
-              <b>Oscillators</b> are patterns that eventually return to its original state after several generations.
-            </div>
-            <div class="template-clickable button" data="pentadecathlon">
-              pentadecathlon
-            </div>
-            <div class="template-clickable button" data="pulsar">
-              Pulsar
-            </div>
-
-            <div class="template-clickable button" data="p16">
-              P16
-            </div>
-          </div>
-
-          <div class="below-selectors-type spaceship-select hidden">
-            <div class="template-description">
-              <b>Spaceships</b> are patterns that reappear after several generations in a new position, giving the illusion of movement.
-            </div>
-            <div class="template-clickable button" data="glider">
-              Glider
-            </div>
-            <div class="template-clickable button" data="lightweightspaceship">
-              LWSS
-            </div>
-            <div class="template-clickable button" data="c10orthogonal">
-              c10orthogonal
-            </div>
-          </div>
-
-          <div class="below-selectors-type generator-select hidden">
-            <div class="template-description">
-              <b>Generators</b> are stationary patterns that create gliders after several generations.
-            </div>
-            <div class="template-clickable button" data="glidergun">
-              Gosper Glider Gun
-            </div>
-
-          </div>
-
-
         </div>
       </div>
     </div>

@@ -38,10 +38,34 @@ body {
   font-size: 18px;
 }
 
-.button {
-  color: darkblue;
+.playback {
+  margin-left: 5px;
+}
+
+.below-canvas .clear-all {
+  float: right;
+  background: red;
+}
+
+.slider {
   float: left;
-  background: lightblue;
+}
+
+.slider p {
+  margin-top: 20px;
+  margin-right: 10px;
+  float: left;
+}
+
+.slider input {
+  width: 350px;
+  margin-top: 20px;
+}
+
+.button {
+  color: white;
+  float: left;
+  background: #7900e1;
   box-sizing:border-box;
   padding: 10px;
   margin-top: 10px;
@@ -51,11 +75,11 @@ body {
 
 .button:hover {
   cursor: pointer;
-  outline: 3px solid blue;
+  text-decoration: underline;
 }
 
 .play-active {
-  background: green;
+  background: #008d00;
 }
 
 .play-active.stop {
@@ -67,13 +91,28 @@ body {
 }
 
 .below-selectors {
-  background: orange;
   margin-top: 10px;
-  color: black;
 }
+
+.pickers-everything {
+  padding: 0 5px 10px 5px;
+  border: 2px solid #c27cff;
+  border-radius: 5px;
+}
+
 .template-description {
   margin: 10px 0;
 }
 .template-clickable {
   text-transform: capitalize;
+}
+
+.about-conway {
+  margin-top: 30px;
+  margin-bottom: 100px;
+}
+
+.about-conway .heading {
+  font-size: 22px;
+  margin-bottom: 5px;
 }

@@ -51,6 +51,7 @@
 	
 	  canvas.width = Canvas.DIM_X;
 	  canvas.height = Canvas.DIM_Y;
+	  canvas.speed = 600;
 	
 	  const ctx = canvas.getContext('2d');
 	
@@ -100,7 +101,7 @@
 	      intervalName = setInterval(() => {
 	        thisCanvas.processConway(ctx, 1);
 	        thisCanvas.draw(ctx);
-	      }, 300);
+	      }, canvas.speed);
 	    }
 	  });
 	
@@ -136,6 +137,19 @@
 	    thisCanvas.setTemplate(e.target.attributes.data.nodeValue);
 	  });
 	
+	  $('.clear-all').on('click', (e) => {
+	    thisCanvas.clearCells();
+	    thisCanvas.draw(ctx);
+	  });
+	
+	  $('#speed-picker').on('change', (e) => {
+	    $('.play').removeClass('hidden');
+	    $('.stop').addClass('hidden');
+	    clearInterval(intervalName);
+	    intervalName = null;
+	    canvas.speed = 1000 - 10*parseInt(e.target.value);
+	  })
+	
 	})
 
 
@@ -152,7 +166,12 @@
 	    this.y = Canvas.CELLS_Y;
 	
 	    this.cells = this.newCells();
+	    this.generateTemplate(10, 10, Template.glidergun());
 	    this.template = Template.dot();
+	  }
+	
+	  clearCells() {
+	    this.cells = this.newCells();
 	  }
 	
 	  clickHandler(x,y) {
