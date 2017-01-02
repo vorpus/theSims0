@@ -51,7 +51,7 @@
 	
 	  canvas.width = Canvas.DIM_X;
 	  canvas.height = Canvas.DIM_Y;
-	  canvas.speed = 600;
+	  canvas.speed = 400;
 	
 	  const ctx = canvas.getContext('2d');
 	
@@ -194,37 +194,10 @@
 	  }
 	
 	  setTemplate(templateName) {
-	    switch(templateName) {
-	      case 'block':
-	        this.template = Template.block();
-	        break;
-	      case 'beehive':
-	        this.template = Template.beehive();
-	        break;
-	      case 'glider':
-	        this.template = Template.glider();
-	        break;
-	      case 'lightweightspaceship':
-	        this.template = Template.lightweightspaceship();
-	        break;
-	      case 'c10orthogonal':
-	        this.template = Template.c10orthogonal();
-	        break;
-	      case 'pentadecathlon':
-	        this.template = Template.pentadecathlon();
-	        break;
-	      case 'pulsar':
-	        this.template = Template.pulsar();
-	        break;
-	      case 'p16':
-	        this.template = Template.p16();
-	        break;
-	      case 'glidergun':
-	        this.template = Template.glidergun();
-	        break;
-	      default:
-	        this.template = Template.dot();
-	        break;
+	    if (Template[templateName]) {
+	      this.template = Template[templateName]();
+	    } else {
+	      this.template = Template.dot();
 	    }
 	  }
 	
@@ -331,7 +304,7 @@
 	
 	}
 	
-	Canvas.BG_COLOR = "#ffffff";
+	Canvas.BG_COLOR = "#e2e2e2";
 	Canvas.DIM_X = 680;
 	Canvas.DIM_Y = 600;
 	Canvas.CELLS_X = 68;
@@ -412,6 +385,33 @@
 /***/ function(module, exports) {
 
 	class Template {
+	  static processTextplate(txtfile) {
+	    let maxWidth = 0;
+	    let txtarr = txtfile.split("\n").map((line) => {
+	      const onlyLine = line.trim();
+	      if (onlyLine.length > maxWidth) {
+	        maxWidth = onlyLine.length;
+	      }
+	      return onlyLine;
+	    });
+	    return this.txtArrToTemplate(txtarr, maxWidth);
+	  }
+	
+	  static txtArrToTemplate(txtarr, maxWidth) {
+	    const templateArr = new Array(txtarr.length);
+	    txtarr.forEach((line, idx) => {
+	      templateArr[idx] = [];
+	      for (let i = 0; i < maxWidth; i++) {
+	        if (line[i] === "O") {
+	          templateArr[idx].push(1);
+	        } else {
+	          templateArr[idx].push(0)
+	        }
+	      }
+	    });
+	    return templateArr;
+	  }
+	
 	  static dot () {
 	    return [
 	      [1]
@@ -523,6 +523,173 @@
 	    ];
 	  }
 	
+	  static b52bomber () {
+	    return this.processTextplate(
+	      `....OOOOOO
+	      ..OO.....O
+	      OO.O.....O
+	      ....O...O
+	      ......O
+	      ......OO
+	      .....OOOO
+	      .....OO.OO
+	      .......OO`
+	    );
+	  }
+	
+	  static backrake1 () {
+	    return this.processTextplate(
+	      `.....OOO...........OOO
+	        ....O...O.........O...O
+	        ...OO....O.......O....OO
+	        ..O.O.OO.OO.....OO.OO.O.O
+	        .OO.O....O.OO.OO.O....O.OO
+	        O....O...O..O.O..O...O....O
+	        ............O.O
+	        OO.......OO.O.O.OO.......OO
+	        ............O.O
+	        ......OOO.........OOO
+	        ......O...O.........O
+	        ......O.O....OOO
+	        ............O..O....OO
+	        ...............O
+	        ...........O...O
+	        ...........O...O
+	        ...............O
+	        ............O.O`
+	    );
+	  }
+	  static canadagoose () {
+	    return this.processTextplate(
+	      `OOO
+	      O.........OO
+	      .O......OOO.O
+	      ...OO..OO
+	      ....O
+	      ........O
+	      ....OO...O
+	      ...O.O.OO
+	      ...O.O..O.OO
+	      ..O....OO
+	      ..OO
+	      ..OO`
+	    );
+	  }
+	  static bentkeys () {
+	    return this.processTextplate(
+	      `.O........O
+	      O.O......O.O
+	      .O.OO..OO.O
+	      ....O..O
+	      ....O..O`
+	    );
+	  }
+	  static diamondring () {
+	    return this.processTextplate(
+	      `......O
+	      .....O.O
+	      ....O.O.O
+	      ....O...O
+	      ..OO..O..OO
+	      .O....O....O
+	      O.O.OO.OO.O.O
+	      .O....O....O
+	      ..OO..O..OO
+	      ....O...O
+	      ....O.O.O
+	      .....O.O
+	      ......O`
+	    );
+	  }
+	
+	  static vacuum () {
+	    return this.processTextplate(
+	      `.OO.......................OO
+	        .OO.......................O
+	        ........................O.O
+	        ...............OO.......OO
+	        OO.............O.O
+	        OO.............O.OO
+	        ................OO
+	        ................O
+	        ............................................OO
+	        ................O...........................OO
+	        ................OO
+	        OO.............O.OO.............O...O
+	        OO.............O.O.............O.....O.......OO
+	        ...............OO..............O.............OO
+	        ...............................OO...O
+	        .OO..............................OOO
+	        .OO
+	        .................................OOO
+	        ...............................OO...O
+	        ...............................O.............OO
+	        ...............................O.....O.......OO
+	        ................................O...O
+	
+	        ............................................OO
+	        ............................................OO
+	
+	
+	
+	
+	        .....................................OO
+	        .....................................O.O.......OO
+	        .......................................O.......OO
+	        .....................................OOO
+	        ......................O.O
+	        .....................OOO
+	        .....................OOO
+	        .....................O...............OOO
+	        .........................O.O...........O
+	        .....................OO....O.........O.O
+	        ................OO....O...OO.........OO
+	        ...............O.O......O
+	        ...............O
+	        ..............OO`
+	    );
+	  }
+	
+	  static bigun () {
+	    return this.processTextplate(
+	      `...........O
+	      ..........OO
+	      .........OO
+	      ..........OO..OO
+	      ......................................O
+	      ......................................OO........OO
+	      .......................................OO.......OO
+	      ..........OO..OO..................OO..OO
+	      OO.......OO
+	      OO........OO
+	      ...........O
+	      ..................................OO..OO
+	      .......................................OO
+	      ......................................OO
+	      ......................................O`
+	    );
+	  }
+	  static eater () {
+	    return this.processTextplate(
+	      `OO
+	      O.O
+	      ..O
+	      ..OO`
+	    );
+	  }
+	  static quadpseudo () {
+	    return this.processTextplate(
+	      `........OO
+	      ...OO.O..O
+	      ...O.OO.O
+	      ........OO
+	      ...O.OO...O
+	      .OOO.OO.OO
+	      O.......O
+	      .OOO.OO.O
+	      ...O.O.O`
+	    );
+	  }
 	}
 	
 	module.exports = Template;
